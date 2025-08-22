@@ -18,19 +18,19 @@ if (!isset($_SESSION["connected"])) {
     exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $title = sanitize($_POST["title"]);
     $description = sanitize($_POST["description"]);
     $publicationDate = sanitize($_POST["publication_date"]);
     $author = sanitize($_POST["author"]);
     $categoryId = (int) $_POST["id_category"];
-    $userId = $_SESSION["connected"];
+    $userId = $_SESSION["id_users"];
 
     if (empty($title) || empty($description) || empty($publicationDate) || empty($categoryId) || empty($author)) {
         $message = "Tous les champs sont obligatoires.";
     } else {
         try {
-            if (addBook($title, $description, $publicationDate, $author, $categoryId, $userId)) {
+            if (addBook($title, $description, $publicationDate, $author, $categoryId)) {
                 $message = "Livre ajouté avec succès !";
             } else {
                 $message = "Erreur lors de l'ajout du livre.";

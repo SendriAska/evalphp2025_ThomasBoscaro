@@ -2,7 +2,7 @@
 session_start();
 $message = "";
 
-if (isset($_SESSION["user_id"])) {
+if (isset($_SESSION["id_users"])) {
     header("Location: index.php");
     exit;
 }
@@ -24,7 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             $user = model\getUserByEmail($email);
             if ($user && password_verify($password, $user['password'])) {
                 // Connexion réussie
-                $_SESSION["user_id"] = $user['id'];
+                $_SESSION["id_users"] = $user['id'];
+                $_SESSION["email"] = $user["email"];
                 $_SESSION["connected"] = true;
                 header("Location: index.php");
                 exit;
@@ -59,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     <main class="container-fluid">
 
-        <form action="" method="post">
+        <form action="connexion.php" method="post">
             <h2>Se connecter</h2>
             <input type="email" name="email" placeholder="saisir le mail">
             <input type="password" name="password" placeholder="saisir le mot de passe">

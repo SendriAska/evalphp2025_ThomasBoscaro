@@ -1,7 +1,9 @@
 <?php
 
+session_start();
+
 $message = "";
-if (isset($_SESSION["user_id"])) {
+if (isset($_SESSION["id_users"])) {
     header("Location: index.php");
     exit;
 }
@@ -56,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     <main class="container-fluid">
 
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="register.php" method="post" enctype="multipart/form-data">
             <h2>S'inscrire</h2>
             <p class="error"><?= $message ?></p>
             <input type="text" name="firstname" placeholder="saisir le prénom">

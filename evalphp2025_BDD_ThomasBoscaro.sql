@@ -20,7 +20,7 @@ CREATE TABLE book (
 	id_book INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50),
     description TEXT,
-    publication_date DATETIME, -- Par habitude, pour chaque date, je préfère utiliser DATETIME
+    publication_date DATE,
     author VARCHAR(50),
     id_category INT,
     id_users INT,
