@@ -1,5 +1,5 @@
 <?php 
-
+session_start();
 $message = "";
 
 if (isset($_SESSION["user_id"])) {

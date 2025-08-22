@@ -2,14 +2,14 @@
 
 namespace model;
 
-use utils\connectBDD;
 use PDO;
 use Exception;
 use PDOException;
 
 use function utils\connectBDD;
 
-function saveUser(string $firstname, string $lastname, string $email, string $password): bool {
+function saveUser(string $firstname, string $lastname, string $email, string $password): bool
+{
     try {
         $request = "INSERT INTO users(firstname, lastname, email, password) VALUE (?,?,?,?)";
         $pdo = connectBDD();
@@ -25,7 +25,8 @@ function saveUser(string $firstname, string $lastname, string $email, string $pa
     }
 }
 
-function getUserByEmail(string $email): array|false {
+function getUserByEmail(string $email): array|false
+{
     try {
         $request = "SELECT * FROM users WHERE email = ?";
         $pdo = connectBDD();
@@ -38,7 +39,7 @@ function getUserByEmail(string $email): array|false {
     }
 }
 
-function userExists(string $email): bool 
+function userExists(string $email): bool
 {
     try {
 
@@ -49,10 +50,24 @@ function userExists(string $email): bool
         $req->execute();
         $data = $req->fetch(\PDO::FETCH_ASSOC);
         if (empty($data)) {
-                return false;
-            }
-            return true;
-    } catch (\Exception $e) {
             return false;
         }
+        return true;
+    } catch (\Exception $e) {
+        return false;
+    }
+}
+
+function getUserById(int $id): array|false
+{
+    try {
+        $request = "SELECT * FROM users WHERE id = ?";
+        $pdo = connectBDD();
+        $req = $pdo->prepare($request);
+        $req->bindParam(1, $id, \PDO::PARAM_INT);
+        $req->execute();
+        return $req->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        throw new Exception($e->getMessage());
+    }
 }
