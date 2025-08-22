@@ -24,13 +24,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $publicationDate = sanitize($_POST["publication_date"]);
     $author = sanitize($_POST["author"]);
     $categoryId = (int) $_POST["id_category"];
-    $userId = $_SESSION["user_id"];
+    $userId = $_SESSION["connected"];
 
-    if (empty($title) || empty($description) || empty($publiDate) || empty($categories) || empty($author)) {
+    if (empty($title) || empty($description) || empty($publicationDate) || empty($categoryId) || empty($author)) {
         $message = "Tous les champs sont obligatoires.";
     } else {
         try {
-            if (addBook($pdo, $title, $description, $publicationDate, $author, $categoryId, $userId)) {
+            if (addBook($title, $description, $publicationDate, $author, $categoryId, $userId)) {
                 $message = "Livre ajouté avec succès !";
             } else {
                 $message = "Erreur lors de l'ajout du livre.";
